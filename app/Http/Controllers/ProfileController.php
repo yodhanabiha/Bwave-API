@@ -16,9 +16,12 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = auth()->user();
-        $user->name = $request->input('name');
-        $user->photoUri = $request->input('photoUri');
-        $user->photoUriBg = $request->input('photoUriBg');
+        $input = $request->all();
+        $user = Auth::user();
+        $user->username = $input['username'];
+        $user->photoUri = $input['photoUri'];
+        $user->photoUriBg = $input['photoUriBg'];
+        $user->bio = $input['bio'];
+        $user->save();
     }
 }

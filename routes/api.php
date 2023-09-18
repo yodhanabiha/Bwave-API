@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DataUMKMController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,6 @@ Route::controller(RegisterController::class)->group(function()
     Route::middleware('auth')->group(function () {
         Route::post('users', 'login')->name('index');
     });
-    
 
 });
 
@@ -45,6 +45,23 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('user','index');
         Route::patch('user/update', 'update');
     });
+
+    //data umkm
+    Route::controller(DataUMKMController::class)->group(function()
+    {
+        //umkm list
+        Route::get('getumkm','index');
+        Route::get('getumkm/{id}', 'detail');
+
+        //like
+        Route::post('likeumkm/{id}', 'like');
+        Route::delete('unlikeumkm/{id}','unlike');
+        Route::get('checklike/{id}','checklike');
+
+        //view
+        Route::post('viewumkm/{id}','view');
+    });
+
 });
 
 Route::middleware('auth:sanctum')->controller(RegisterController::class)->group(function() {

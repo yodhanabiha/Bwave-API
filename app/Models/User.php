@@ -24,7 +24,8 @@ class User extends Authenticatable
         'number',
         'photoUri',
         'password',
-        'photoUriBg'
+        'photoUriBg',
+        'bio'
     ];
 
     /**
