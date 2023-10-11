@@ -1,19 +1,41 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
 use App\Models\ListUMKM;
 use App\Models\LikeUMKM;
 use App\Models\ReviewUmkm;
 use App\Models\ViewUmkm;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\Paginator;
+use Validator;
 
-class DataUMKMController extends Controller
+class DataUMKMController extends BaseController
 {
     public function index() 
     {
-        $data = ListUMKM::get();
+        $data = ListUMKM::take(6)->get();
+        return $data;
+    }
+
+    public function search(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'search' => 'required',
+            'page' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('validator not completed', $validator->errors());       
+        }
+
+        $search = $request->input('search'); 
+        $page = $request->input('page', 1);
+
+        $data = ListUMKM::where('title', 'LIKE', '%' . $search . '%')->paginate(10, ['*'], 'page', $page);
         return $data;
     }
 
@@ -22,6 +44,7 @@ class DataUMKMController extends Controller
         $data = ListUMKM::find($id);
         return $data;
     }
+    
     public function like($idumkm) {
         $user = Auth::user();
         $iduser = $user->id;

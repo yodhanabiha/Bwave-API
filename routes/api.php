@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DataUMKMController;
+use App\Http\Controllers\API\DataUMKMController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function() {
     {
         //umkm list
         Route::get('getumkm','index');
+        Route::post('getumkm/search', 'search');
         Route::get('getumkm/{id}', 'detail');
 
         //like

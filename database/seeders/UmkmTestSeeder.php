@@ -10,31 +10,41 @@ use App\Models\LikeUMKM;
 use App\Models\ReviewUmkm;
 use App\Models\ViewUmkm;
 use App\Models\ListUMKM;
+use Faker\Factory as Faker;
 
 class UmkmTestSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        ListUMKM::create([
-            'image' => 'https://firebasestorage.googleapis.com/v0/b/bwave-app.appspot.com/o/dataumkm%2F1%2Fumkm%20donat%201.png?alt=media&token=8ed0ddd6-d118-416a-8833-ee490b2f52ef',
-            'title' => 'Donat Abal-Abal',
-            'view' => 0,
-            'rating' => 0,
-            'review' =>0,
-            'description' => 'LOREM IPSUM BLA BLA'
-        ]);
+        $faker = Faker::create('id_ID');
 
-        ListUMKM::create([
-            'image' => 'https://firebasestorage.googleapis.com/v0/b/bwave-app.appspot.com/o/dataumkm%2F2%2Fumkm%20seblak%201.png?alt=media&token=c00d499a-1a77-4170-9aa2-960321404caa',
-            'title' => 'Seblak Gacor',
-            'view' => 0,
-            'rating' => 0,
-            'review' =>0,
-            'description' => 'LOREM IPSUM BLA BLA'
-        ]);
+        for ($i = 1; $i <= 50; $i++) {
+            $latitude = $faker->latitude;
+            $longitude = $faker->longitude;
+            $description = $faker->text(250);
+            $title = $faker->text(20);
+            $image = $faker->imageUrl(360, 360);
+
+            ListUMKM::create([
+                'image' => $image,
+                'title' => $title,
+                'view' => 0,
+                'rating' => 0,
+                'review' => 0,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+                'description' => $description
+            ]);
+        }
+
+        // ListUMKM::create([
+        //     'image' => 'https://firebasestorage.googleapis.com/v0/b/bwave-app.appspot.com/o/dataumkm%2F2%2Fumkm%20seblak%201.png?alt=media&token=c00d499a-1a77-4170-9aa2-960321404caa',
+        //     'title' => 'Seblak Gacor',
+        //     'view' => 0,
+        //     'rating' => 0,
+        //     'review' =>0,
+        //     'description' => 'LOREM IPSUM BLA BLA'
+        // ]);
 
         $yodha = User::create([
             'username' => 'Yodha Nabiha Rafif',

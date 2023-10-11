@@ -19,7 +19,8 @@ return new class extends Migration
             $table->bigInteger('review');
             $table->double('rating');
             $table->string('description');
-            $table->string('location')->nullable();
+            $table->double('latitude');
+            $table->double('longitude');
             $table->time('time_open')->nullable();
             $table->time('time_close')->nullable();
             $table->timestamps();
